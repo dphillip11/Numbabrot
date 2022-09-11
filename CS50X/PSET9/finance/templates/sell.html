@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+
+{% block main %}
+    <h1 id="quote">Sell</h1>
+
+    <form action="/sell" method="post">
+        <div class="mb-3">
+            <select class="form-control mx-auto w-auto" name="symbol" id="symbol">
+                {%for symbol in symbols%}
+                    <option>{{symbol}}</option>
+                {%endfor%}
+            </select>
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="shares" name="shares" placeholder="number of shares" type="number" min="1">
+        </div>
+        <button class="btn btn-primary" type="submit">Sell</button>
+    </form>
+
+    <h2><ul id="blank"></ul></h2>
+
+
+    <script>
+        symbol = document.getElementById("symbol");
+        blank = document.getElementById("blank");
+        shares = document.getElementById("shares");
+
+        shares.addEventListener('input', async function(){
+
+            let response = await fetch('/search?q=' + symbol.value + '&n=' + shares.value);
+            let quote = await response.text();
+            blank.innerHTML = quote;
+        });
+
+    </script>
+{% endblock %}

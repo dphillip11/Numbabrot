@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Birthdays</title>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Birthdays</h1>
+        </div>
+        <div class="container">
+            <div class="section">
+
+                <h2>Add a Birthday</h2>
+                <form action="/" method="post">
+                    <input type="text" name="name" placeholder="Name">
+                    <select name="day" id="day">
+                    </select>
+                    <select name="month" id="month">
+                    </select>
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+
+            <div class="section">
+
+                <h2>All Birthdays</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><u>Name</u></th>
+                            <th><u>Birthday</u></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in birthdays%}
+                            </tr>
+                                <td>{{entry["name"]}}</td>
+                                <td>{{entry["day"]}} {{entry["month"]}}</td>
+                                <td id="delete">
+                                    <form action="/delete" method="post">
+                                        <input name="id" type="hidden" value="{{entry.id}}">
+                                        <input type="submit" value="Delete">
+                                    </form>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+    <script>
+         months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+         for(entry of months)
+         {
+            document.getElementById("month").innerHTML = document.getElementById("month").innerHTML + "<option>" + entry + "</option>";
+         }
+
+        // useful function for ordinal numbers from  https://leancrew.com/all-this/2020/06/ordinal-numerals-and-javascript/
+         function ordinal(n) {
+            var s = ["th", "st", "nd", "rd"];
+            var v = n%100;
+            return n + (s[(v-20)%10] || s[v] || s[0]);
+          }
+
+          for (let i = 1; i < 32; i++)
+          {
+            document.getElementById("day").innerHTML= document.getElementById("day").innerHTML + "<option>" + ordinal(i) + "</option>";
+          }
+    </script>
+</html>

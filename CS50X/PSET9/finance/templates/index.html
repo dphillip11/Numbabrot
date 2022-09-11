@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Portfolio
+{% endblock %}
+
+{% block main %}
+
+    <h1 id="quote"><span class="blue">P</span><span class="red">o</span><span class="yellow">r</span><span class="green">t</span><span class="red">folio</span></h1>
+    <table>
+        <thead>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>Shares</th>
+            <th>Sell</th>
+            <th>Buy more</th>
+            <th>Price</th>
+            <th>TOTAL</th>
+        </thead>
+        {%for row in holdings%}
+        <tr class="main">
+
+                <td>{{row['symbol']}}</td>
+                <td>{{names[row['symbol']]}}</td>
+                <td id="qty">{{row['qty']}}</td>
+                <td class="smallcol">
+                    <form action="/sell" method="post">
+                        <input type="hidden" name="symbol" value="{{row['symbol']}}">
+                        <input class="smallnum" type="number" name="shares" id="sell{{row['symbol']}}">
+                        <input type="submit" value="Sell">
+                    </form>
+                </td>
+                <td class="smallcol">
+                    <form action="/buy" method="post">
+                        <input type="hidden" name="symbol" value="{{row['symbol']}}">
+                        <input class="smallnum" type="number" name="shares" id="buy">
+                        <input type="submit" value="Buy">
+                    </form>
+                </td>
+            <td>{{prices[row['symbol']]}}</td>
+            <td>{{totals[row['symbol']]}}</td>
+        </tr class="main">
+        {%endfor%}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td id="test2"></td>
+            <td id="test"></td>
+            <td class="bold">Cash</td>
+            <td class="bold" id="cash">{{cash}}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="bold">TOTAL</td>
+            <td class="bold" id="total">{{gtotal}}</td>
+        </tr>
+    </table>
+
+
+{% endblock %}

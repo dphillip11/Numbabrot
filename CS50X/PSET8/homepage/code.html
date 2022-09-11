@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="styles.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mandelbrot Visualisation</title>
+    </head>
+    <body>
+
+            <ul class="topnav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="pset4.html">PSET 4</a></li>
+                <li><a class ="active" href="code.html">Code</a></li>
+                <li><a href="further.html">Further exploration</a></li>
+            </ul>
+
+
+            <banner>
+                <img src="misc/banner.jpg" width="100%">
+            </banner>
+
+
+
+            <div class="header">
+                <h1>
+                    Mandelbrot Visualisation
+                </h1>
+            </div>
+
+            <p>As previously mentioned, we need to perform some transformations to convert our pixel index values(indexes/indices?) to co-ordinates:</p>
+
+            <img src="misc/index_xy.png" class="fs">
+
+          <p>Now we have well defined inputs, lets compute our mandelbrot values:</p>
+
+            <img src="misc/functionM.png" class="fs">
+
+            <p>We have mandelbrot values in some predetermined range, but we need 3 values, a red, green and blue. Here is a simple color map I devised. The visualisations vary in aesthetic quality depending on the range
+              you allow, I personally like the effect of using overlapping sine functions to create colors. I add one to the sine output so it is always positive and scale it to cover the color range 0-255.
+              I have limited our input to 180 degrees so that there is less periodicity in our color scheme. I have experimented with randomising the offset of the overlapping color distributions,
+               it gives mixed results as may be expected, not always visually pleasing. I also experimented with linear functions using the absolute value function which can also produce pleasing results. </p>
+
+          <img src="misc/colormapsine.png" class="fs">
+
+            <p>Be warned the subsequent images make some people feel queezy, to me it appears to move...</p>
+
+            <div align="center"><img src="misc/msetvis.png" class="fs"></div>
+
+            <p>The previous images were obtained by setting a very specific offset and then zooming. The reason for this is that as you zoom you may enter empty space, i.e space that is not occupied by the curriously changeable boundary. ( As
+            a side note, have you read the wiki article about the <a href="https://en.wikipedia.org/wiki/Coastline_paradox" >coastline paradox?</a> I imagine as a ruler
+            of a country it may be flattering to describe your borders as exceptionally large and your measuring devices as superiorly accurate.)</p>
+
+            <p>If we zoom on some less specific coordinates, let's see what happens...(click image to zoom)</p>
+
+              <div align="center"><img src="rzoom/m1.png" id="slideshow" onclick="changeImage()" class="fs"></div>
+
+              <p>Well, that's no good! At some level of zoom we have fallen outside of the interesting boundary. One way to fix this is to provide as we did before increasingly accurate coordinates and if we are doubling our zoom each
+                time you will before long have to define decimal values so long your computer will struggle to calculate them accurately. This is possible to do but tedious. I have a plan to improve it. Do you remember that edge detection filter we used in the problem set?
+                I run the edge detection over the image and before square rooting the sums from my respective kernels I track the highest or brightest pixel values, we don't need to adjust the value more as we do not need to see the edge detection image. We then adjust our offset for
+                each image we produce.</p>
+
+                <div align="center"><img src="misc/reposition.png" class="fs"></div>
+
+                <p>I would
+              however feel like a scrooge if I didn't give you a peek so I have adjusted the pixel values and produced this(click to zoom)...</p>
+
+              <div align="center"><img src="edges/e1.png" id="slideshow2" onclick="changeImage2()" class="fs"></div>
+
+              <p>Now our program is producing an image, producing a edge detection image, finding the brightest pixel and then adjusting the offset before
+                zooming and starting again. Again, click the image to zoom...
+              </p>
+              <div align="center"><img src="output/o1.png" id="slideshow3" onclick="changeImage3()" class="fs"></div>
+
+              <p>If you made it to the end of the images you will have noticed a couple of things, some areas on the boundary look quite similar and repetitive
+                so these may not be the most interesting areas to explore. Also given the implemented code we start to see a grainy image. Having zoomed over and over again 50 times I imagine this is actually
+                a floating point accuracy issue. The data type I have used for the coordinates has a limited accuracy and we have to adjust our co-ordinates with greater and greater accuracy so the number of digits
+                beyond the decimal place becomes quite long. I could create a new data type to express the coordinates I suppose but I would also like to explore more freely. I have some ideas where this could go.
+              </p>
+
+              <a href="further.html"><button type="button" class="btn btn-dark">Further Exploration</button></a>
+
+              <p></p>
+
+
+
+
+
+
+            <div class="flex-container" >
+                <img class="tb" src="colormap/cm3.png">
+                <img class="tb" src="colormap/cm1.png">
+                <img class="tb" src="colormap/cm7.png">
+                <img class="tb" src="colormap/cm6.png">
+                <img class="tb" src="colormap/cm8.png">
+            </div>
+
+    </body>
+
+    <script>
+        i = 1;
+
+        function changeImage() {
+          i ++;
+          document.getElementById("slideshow").src =images[i % 15]
+          }
+
+        var images = ["rzoom/m1.png","rzoom/m2.png","rzoom/m3.png","rzoom/m4.png","rzoom/m5.png","rzoom/m6.png","rzoom/m7.png","rzoom/m8.png","rzoom/m9.png","rzoom/m10.png",
+        "rzoom/m11.png","rzoom/m12.png","rzoom/m13.png","rzoom/m14.png","rzoom/m15.png"];
+
+        j = 1;
+
+        function changeImage2() {
+          j ++;
+          document.getElementById("slideshow2").src =images2[j % 15]
+          }
+
+        var images2 = ["edges/e1.png","edges/e2.png","edges/e3.png","edges/e4.png","edges/e5.png","edges/e6.png","edges/e7.png","edges/e8.png","edges/e9.png","edges/e10.png",
+        "edges/e11.png","edges/e12.png","edges/e13.png","edges/e14.png","edges/e15.png"];
+
+        k = 1;
+
+        function changeImage3() {
+          k ++;
+          document.getElementById("slideshow3").src =images3[k % 50]
+          }
+
+        var images3 = ["output/o1.png","output/o2.png","output/o3.png","output/o4.png","output/o5.png","output/o6.png","output/o7.png","output/o8.png","output/o9.png","output/o10.png","output/o11.png","output/o12.png","output/o13.png","output/o14.png","output/o15.png",
+        "output/o16.png","output/o17.png","output/o18.png","output/o19.png","output/o20.png","output/o21.png","output/o22.png","output/o23.png","output/o24.png","output/o25.png","output/o26.png","output/o27.png","output/o28.png","output/o29.png","output/o30.png",
+        "output/o31.png","output/o32.png","output/o33.png","output/o34.png","output/o35.png","output/o36.png","output/o37.png","output/o38.png","output/o39.png","output/o40.png","output/o41.png","output/o42.png","output/o43.png","output/o44.png","output/o45.png",
+        "output/o46.png","output/o47.png","output/o48.png","output/o49.png","output/o50.png"];
+
+      </script>
+</html>

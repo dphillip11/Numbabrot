@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+<h1><strong><u>
+    Register
+</u></strong></h1>
+    <form action="/register" method ="post">
+        <input autofocus name="name" autocomplete="off" required placeholder="Name" type="text">
+        <!-- <input name="email" autocomplete="off" required placeholder="email" type="text"> -->
+
+                    {%for sport in SPORTS%}
+                        <input name="sport" type="radio" value="{{sport}}">{{sport}}
+                    {%endfor%}
+
+        <input type="submit" value="register">
+    </form>
+    <br>
+    <p></p>
+    <form action="/logout">
+            <input type="submit" value="logout">
+
+{%endblock%}

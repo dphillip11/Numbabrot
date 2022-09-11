@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="styles.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mandelbrot Visualisation</title>
+    </head>
+    <body>
+
+            <ul class="topnav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="pset4.html">PSET 4</a></li>
+                <li><a href="code.html">Code</a></li>
+                <li><a class ="active" href="further.html">Further exploration</a></li>
+            </ul>
+
+
+            <banner>
+                <img src="misc/banner.jpg" width="100%">
+            </banner>
+
+
+
+            <div class="header">
+                <h1>
+                    Mandelbrot Visualisation
+                </h1>
+            </div>
+
+            <p>Thus far I have been using 8-bit values for the red, the green and the blue values. I write these to a file after writing the BMP header info. The method for this is simple enough
+                but it took a little playing to understand what each parameter represents. I have set out my header according the <a href="http://msdn.microsoft.com/en-us/library/cc230309.aspx">microsoft page</a>.
+                It looks a bit like this:
+              </p>
+              <div><img src="misc/headerInfo.png" class="img-fluid" alt="..."></div>
+              <p>I have used 'size' instead of height or width because there is slightly more simplicity dealing with square images when iterating through pixels. So 3 bytes per pixel, not a lot really? Well I can
+                set my image to any size I like and easily generate files big enough to get me kicked off my codespace. One area of exploration may be to look into compression, this could also serve as our edge detection function too.
+                One possible option is the fast fourier transform(FFT) algorithm. If we use a library suited to complex numbers this would be quite simple, we could find areas of relative intensity in the image and compress our image at the same time.
+                This algorithm performs particulary well with natural looking images to which I'm not sure these visualisations are a subset. Another option is to index our colours as we are only using a limited range of them we do not
+                need to store the colour values for every pixel, just the index. We would however need to recompile the images to use them, I have not learned how to do this in a web browser.
+
+               <p> Another area worth exploring is the idea of traversing the m-set manually. Using a web browser it would be possible to create an image map, a set of links in different locations over an image and then use these
+                to calculate new offset values. It should be possible to have code perform similarly within the web browser that will generate new images on request. Even without overcoming the accuracy issue this could be quite fun.
+                    </p>
+                    <p>It may work something like this, try clicking different regions:
+                    </p>
+                    <img id="big" src="navi/big.png" usemap="#workmap" width="500" height="500">
+
+                    <map name="workmap">
+                        <area shape="rect" coords="0, 0, 250, 250" onclick="myFunction(1)">
+                        <area shape="rect" coords="250, 0, 500, 250" onclick="myFunction(2)">
+                        <area shape="rect" coords="250, 250, 0, 500" onclick="myFunction(3)">
+                        <area shape="rect" coords="250, 250, 500, 500" onclick="myFunction(4)">
+                    </map>
+
+               <p> I am also interested in how well a neural network could predict mandelbrot values given a set of coordinates. It would be easy to generate the required training and testing data but in my estimation this
+                solution may prove a more computationally intensive way of achieving the same result. If an image could be generated without requiring long coordinate values at any specified zoom and location, this would be ideal.
+              </p>
+
+
+
+            <div class="flex-container" >
+                <img class="tb" src="colormap/cm16.png">
+                <img class="tb" src="colormap/cm15.png">
+                <img class="tb" src="colormap/cm14.png">
+                <img class="tb" src="colormap/cm10.png">
+                <img class="tb" src="colormap/cm19.png">
+            </div>
+
+            <script>
+                index=0;
+                list = ["navi/bigtl.png", "navi/bigtr.bmp", "navi/bigbl.bmp", "navi/bigbr.bmp",
+                        "navi/tltl.png", "navi/tltr.png", "navi/tlbl.png", "navi/tlbr.png",
+                        "navi/trtl.bmp", "navi/trtr.bmp", "navi/trbl.bmp", "navi/trbr.bmp",
+                        "navi/bltl.png", "navi/bltr.png", "navi/blbl.png", "navi/blbr.png",
+                        "navi/brtl.png", "navi/brtr.png", "navi/brbl.png", "navi/brbr.png",];
+                function myFunction(a) {
+                    if (index==0){
+                    document.getElementById("big").src=list[a - 1];
+                    index = a;}
+                    else if(index<5){
+                    n= (index * 4)+ a;
+                    document.getElementById("big").src=list[n - 1];
+                    index=5;
+                    }
+                    else
+                    {index=0;
+                    document.getElementById("big").src="navi/big.png";}
+                }
+            </script>
+
+    </body>
+
+</html>

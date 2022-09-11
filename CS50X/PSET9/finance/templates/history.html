@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+history
+{% endblock %}
+
+{% block main %}
+
+    <h1 id="quote">History</h1>
+    <table>
+        <thead>
+            <th>Symbol</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Transacted</th>
+        </thead>
+        {%for row in orders%}
+        <tr class="main">
+            <td class="bold">{{row['symbol']}}</td>
+            <td>{{row['qty']}}</td>
+            <td>{{row['price']}}</td>
+            <td>{{row['datetime']}}</td>
+        </tr class="main">
+        {%endfor%}
+        
+    </table>
+{% endblock %}

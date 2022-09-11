@@ -1,0 +1,12 @@
+abseil
+absolute
+abstain
+apple
+cat
+dog
+elephant
+zebra
+an
+fish
+ghastly
+rage

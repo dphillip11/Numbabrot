@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            //Run script once DOM is loaded
+            document.addEventListener('DOMContentLoaded', function(){
+
+                // when incorrect answer is selected, change color to red
+                    let bad = document.querySelectorAll('.bad');
+                    for(let i = 0; i < bad.length; i ++){
+                        bad[i].addEventListener('click', function() {
+                            bad[i].style.backgroundColor = '#FF0000';
+                            bad[i].style.color = '#FFFFFF'
+                            document.querySelector('#feedback').innerHTML = 'Incorrect!';}
+                    )}
+                // when correct answer selected
+                    let good = document.querySelector('.good');
+                    good.addEventListener('click', function(){
+                        good.style.backgroundColor = 'green';
+                        good.style.color = 'white';
+                        document.querySelector('#feedback').innerHTML = 'Correct!';
+                    })
+                // check free submission
+                document.querySelector('#check').addEventListener('click', function(){
+                let response = document.querySelector('input')
+                if (response.value.toUpperCase() === "ECHIDNA")
+                {
+                    response.style.backgroundColor = '#00FF00';
+                    document.querySelector('#feedback2').innerHTML = 'Correct!';
+                    response.style.color = '#000';
+                }
+                else
+                {
+                    response.style.backgroundColor = 'red';
+                    document.querySelector('#feedback2').innerHTML = 'Incorrect!';
+                    response.style.color = 'white';
+                }
+                })
+
+            })
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <h3> Which mammal lays eggs?</h3>
+                <button class = "bad">dog</button>
+                <button class = "bad">human</button>
+                <button class = "good">platypus</button>
+
+                <p id="feedback"></p>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <h3>Which mammal featured in 'Sonic the Hedgehog' also lays eggs?</h3>
+                <input type='text'></input>
+                <button id="check">Check</button>
+
+                <p id="feedback2"></p>
+            </div>
+        </div>
+    </body>
+</html>
