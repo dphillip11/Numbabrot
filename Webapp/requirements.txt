@@ -1,0 +1,7 @@
+Flask
+Flask-Session
+requests
+Pillow
+numpy
+numba
+opencv-python

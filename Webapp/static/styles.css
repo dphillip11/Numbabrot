@@ -1,0 +1,38 @@
+.fleximage{
+    display: flex;
+    justify-content: center;
+}
+
+#image{
+    justify-self: center;
+    align-self: center;
+} 
+
+.topnav
+{
+    display: flex;
+    justify-content: center;
+  position: sticky;
+  top: 0;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #a6b3ed;
+}
+
+.topnav li {float: left;
+margin: 10px}
+
+.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 5px 16px;
+  text-decoration: none;
+}
+
+.topnav li a:hover{
+  background-color: white;
+  color: black;
+}

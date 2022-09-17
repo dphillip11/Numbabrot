@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html lang = "en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>
+            image
+        </title>
+
+    </head>
+    <body>
+        <h1>Current iterations: {{session['quality']}}<br> Position: {{session['x1']}}, {{session['y1']}}</h1>
+        <ul class="topnav">
+            <li>
+                <form  action="/" method="get">
+                    <input class="btn btn-primary" type="submit" value="Restart">
+                </form>
+            </li>
+            <li>
+                <form action="/PILCV" method="get">
+                    <input class="btn btn-primary" type="submit" value="Method 1:PIL">
+                </form>
+            </li>
+        
+            <li>
+                <form action="/color" method="get">
+                    <input class="btn btn-primary" type="submit" value="Method 1: Change colors">
+                </form>
+            </li>
+            <li>
+                <form method="get" action="/quality" >
+                    <input class="btn btn-primary" type="submit" name="up" value="Increase Quality">
+                </form>        
+            </li>
+            <li>
+                <form action="/quality" method="get">
+                    <input class="btn btn-primary" type="submit" name="down" value="Decrease Quality">
+                </form>        
+            </li>
+            <li>
+                <form action="/randomise" method="get">
+                    <input class="btn btn-primary" type="submit" value="Method 2: Change Colors">
+                </form>
+            </li>
+            <li>
+                <form action="/alt" method="get">
+                    <input class="btn btn-primary" type="submit" value="Method 2:Numba">
+                </form>
+            </li>
+        </ul>
+        <div class="fleximage">
+            <image src="/static/rgb.jpg" id="image" alt="image" usemap="#imagemap"></image>
+            
+                <map name="imagemap" id="map" onclick="clickHandler(event)">
+             
+                </map>
+        </div>
+    
+    
+        
+        <script>
+            im = document.getElementById('map');
+            resolution = 1500;
+            parts = 10;
+            
+            for(let i = 0; i < parts; i ++)
+            {
+                for(let j = 0; j < parts; j ++)
+                im.innerHTML += '<area shape="rect" coords="' + (i * resolution/parts) + ',' + (j * resolution/parts) + ',' + ((i + 1) * resolution/parts) + ',' + ((j + 1) * resolution/parts) + '" alt="spot">';
+                
+            }
+
+            function clickHandler(pixel)
+            {
+                console.log(pixel.target);
+                coords = pixel.target.coords
+                coords = coords.split(',');
+                x = (parseInt(coords[0]) + parseInt(coords[2])) / 2 
+                y = (parseInt(coords[1]) + parseInt(coords[3])) / 2 
+                window.location.href = "/?x=" + x + "&y=" + y;
+
+            }
+
+
+        </script>
+    </body>
+</html>
