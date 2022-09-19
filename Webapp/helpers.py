@@ -46,7 +46,7 @@ def runNumbabrot():
     image = numbabrot(resolution, offset_x, offset_y, zoom, ITER, offset_r, offset_g, offset_b)
     cv2.imwrite('static/rgb.jpg', image)
 
-@jit(nopython=True)
+@jit(nopython=True, fastmath=True)
 def numbabrot(resolution, offset_x, offset_y, zoom, ITER, offset_r, offset_g, offset_b):
     
     COLORS = 60
