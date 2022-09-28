@@ -5,7 +5,7 @@ from numba import jit
 import time
 import math
 
-ITER = 125
+ITER = 500
 COLORS =100
 size = 5000
 increment = 255/ (COLORS - 1)
@@ -29,7 +29,7 @@ def colorm():
 
 
 
-@jit(nopython=True)
+@jit(nopython=True, fastmath=True)
 def mandelbrot(arr):
     m = np.empty((size, size), dtype=np.uint8)
     for i in range(size):

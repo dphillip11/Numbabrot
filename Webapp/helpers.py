@@ -3,7 +3,7 @@ from PIL import Image
 import cv2
 import math
 import numpy as np
-from numba import jit
+from numba import jit, prange
 
 def mandelbrot():
     session['alt']=0
@@ -46,7 +46,7 @@ def runNumbabrot():
     image = numbabrot(resolution, offset_x, offset_y, zoom, ITER, offset_r, offset_g, offset_b)
     cv2.imwrite('static/rgb.jpg', image)
 
-@jit(nopython=True, fastmath=True)
+@jit(nopython=True, fastmath=True, parallel=True)
 def numbabrot(resolution, offset_x, offset_y, zoom, ITER, offset_r, offset_g, offset_b):
     
     COLORS = 60
@@ -58,7 +58,7 @@ def numbabrot(resolution, offset_x, offset_y, zoom, ITER, offset_r, offset_g, of
     increment = 360 / (COLORS - 1)
  
 
-    for i in range (COLORS):
+    for i in prange (COLORS):
 
         red[i]=(round(125 * (math.sin((increment * i) + offset_r)+1)))
         green[i]=(round(125 * (math.sin((increment * i) + offset_b) +1)))
@@ -67,8 +67,8 @@ def numbabrot(resolution, offset_x, offset_y, zoom, ITER, offset_r, offset_g, of
     image = np.zeros((resolution, resolution, 3 ), dtype=np.uint8)
     
 
-    for i in range(resolution):
-        for j in range(resolution):
+    for i in prange(resolution):
+        for j in prange(resolution):
             y = (2.0 * i)/ resolution;  ##gives a range from 0 to 2
             y = y - 1.0     ##centres about origin
             y = y / zoom   ##magnifies coordinates

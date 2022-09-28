@@ -1,13 +1,9 @@
-
-from pickletools import bytes8, uint8
 import cv2
-from PIL import Image
 import time
 import math
 import numpy as np
-from numba import jit
-
-ITER = 180
+from numba import jit, prange
+ITER = 500
 COLORS = 60
 resolution = 5000
 offset_x=0
@@ -15,7 +11,7 @@ offset_y=0
 zoom=0.5
 
 # this decorator makes a HUUUGGGE amount of difference, try with and without
-@jit(nopython=True)
+@jit(nopython=True, fastmath=True, parallel=True)
 def numbabrot():
 
     red = np.zeros((COLORS))
@@ -29,7 +25,7 @@ def numbabrot():
     offset_b = np.random.randint(0, 360) 
  
 
-    for i in range (COLORS):
+    for i in prange (COLORS):
 
         red[i]=(round(125 * (math.sin((increment * i) + offset_r)+1)))
         green[i]=(round(125 * (math.sin((increment * i) + offset_b) +1)))
@@ -37,9 +33,9 @@ def numbabrot():
     
     image = np.zeros((resolution, resolution, 3 ), dtype=np.uint8)
     
-
-    for i in range(resolution):
-        for j in range(resolution):
+    
+    for i in prange(resolution):
+        for j in prange(resolution):
             y = (2.0 * i)/ resolution;  ##gives a range from 0 to 2
             y = y - 1.0     ##centres about origin
             y = y / zoom   ##magnifies coordinates
