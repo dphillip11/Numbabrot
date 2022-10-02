@@ -1,6 +1,6 @@
 # Numbabrot web app
 
-#### Video Demo:  <https://drive.google.com/file/d/1WoXqx-RlFH0KyLxAoH1S55c8aeFoVNwn/view?usp=sharing>
+#### Lite Demo:  <http://dphillip11.pythonanywhere.com/>
 
 ![screenshot4](https://user-images.githubusercontent.com/109744044/193240431-870a079a-f6cf-461e-850a-77600e0d74f8.jpg)
 #### Description:
