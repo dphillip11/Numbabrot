@@ -13,7 +13,7 @@
 
     </head>
     <body>
-        <h1>Current iterations: {{session['quality']}}<br> Position: {{session['x1']}}, {{session['y1']}}</h1>
+        <!-- <h1 id = 'header'>Current iterations: {{session['quality']}}<br> Position: {{session['x1']}}, {{session['y1']}}, size: {{session['height']}}, {{session['width']}}</h1> -->
         <ul class="topnav">
             <li>
                 <form  action="/" method="get">
@@ -64,13 +64,16 @@
         
         <script>
             im = document.getElementById('map');
-            resolution = 1500;
-            parts = 10;
+            var width = window.innerWidth;
+            var height = window.innerHeight;
             
+            
+            parts = 10;
+                        
             for(let i = 0; i < parts; i ++)
             {
                 for(let j = 0; j < parts; j ++)
-                im.innerHTML += '<area shape="rect" coords="' + (i * resolution/parts) + ',' + (j * resolution/parts) + ',' + ((i + 1) * resolution/parts) + ',' + ((j + 1) * resolution/parts) + '" alt="spot">';
+                im.innerHTML += '<area shape="rect" coords="' + (i * width/parts) + ',' + (j * height/parts) + ',' + ((i + 1) * width/parts) + ',' + ((j + 1) * height/parts) + '" alt="spot">';
                 
             }
 
@@ -79,9 +82,9 @@
                 console.log(pixel.target);
                 coords = pixel.target.coords
                 coords = coords.split(',');
-                x = (parseInt(coords[0]) + parseInt(coords[2])) / 2 
-                y = (parseInt(coords[1]) + parseInt(coords[3])) / 2 
-                window.location.href = "/?x=" + x + "&y=" + y;
+                x = Math.round((parseInt(coords[0]) + parseInt(coords[2])) / 2) 
+                y = Math.round((parseInt(coords[1]) + parseInt(coords[3])) / 2) 
+                window.location.href = "/?x=" + x + "&y=" + y + "&wh=" + window.innerHeight + "&ww=" + window.innerWidth ;
 
             }
 

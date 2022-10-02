@@ -6,6 +6,8 @@
 #image{
     justify-self: center;
     align-self: center;
+    width: 100vw;
+    height:100vh;
 } 
 
 .topnav
@@ -17,7 +19,7 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: wrap;
   background-color: #a6b3ed;
 }
 

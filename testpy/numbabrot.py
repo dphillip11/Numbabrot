@@ -5,7 +5,7 @@ import numpy as np
 from numba import jit, prange
 ITER = 500
 COLORS = 60
-resolution = 5000
+resolution = 10000
 offset_x=0
 offset_y=0
 zoom=0.5

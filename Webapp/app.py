@@ -16,11 +16,17 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-
+   
 @app.route("/", methods=['GET'])
 def index():
     x = request.args.get("x")
     y = request.args.get("y")
+    wh = request.args.get("wh")
+    ww = request.args.get("ww")
+    if not wh or not ww:
+        return render_template('queryscreen.html')
+    session['width'] = ww
+    session['height'] = wh
     if not x:
         initialise()
         mandelbrot()
