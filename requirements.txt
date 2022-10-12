@@ -5,3 +5,4 @@ Pillow
 numpy
 numba
 opencv-python
+ffmpeg libsm6 libxext6 -y
