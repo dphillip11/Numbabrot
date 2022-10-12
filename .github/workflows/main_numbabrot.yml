@@ -20,7 +20,7 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v1
         with:
-          python-version: '3.10'
+          python-version: '3.9'
 
       - name: Create and start virtual environment
         run: |
@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'Numbabrot'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EFA749DA923F43799BFFB572C09FA64F }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6251602B16D54647B277E9C6997E0587 }}
